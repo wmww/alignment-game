@@ -1,1 +1,1 @@
-collect_ignore = ['bin', 'lib', 'lib64', 'share', 'include'] # Ignore directories created by venv
+# If this file doesn't exist test imports will fail
