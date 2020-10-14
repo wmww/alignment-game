@@ -1,9 +1,24 @@
 import json
 import os
+from typing import cast, TypedDict, List, Optional
 
-INIT_STATE = {
+class Player(TypedDict):
+    user_id: str
+    username: str
+    pfp_path: str
+
+class Square(TypedDict):
+    claimant: Optional[str] # Should be a user_id
+    territory: Optional[str] # Unsure how to model atm
+    player: Optional[str] # user_id, represents the player currently in the location
+
+class GameState(TypedDict):
+    grid: List[List[Square]]
+    players: List[Player]
+
+INIT_STATE: GameState = {
     'players': [],
-    # grid here, absence used to indicate to Game to instantiate it
+    'grid': [],
 }
 JSON_FILEPATH = 'state.json'
 
@@ -15,12 +30,12 @@ def init_state_file(filepath: str = JSON_FILEPATH) -> None:
 def remove_state_file(filepath: str) -> None:
     os.remove(filepath)
 
-def write_state(dict: dict, filepath: str = JSON_FILEPATH) -> None:
+def write_state(state: GameState, filepath: str = JSON_FILEPATH) -> None:
     with open(filepath, 'w') as f:
-        json.dump(f)
+        json.dump(state, f)
 
-def read_state(filepath: str = JSON_FILEPATH) -> dict:
+def read_state(filepath: str = JSON_FILEPATH) -> GameState:
     init_state_file(filepath)
 
     with open(filepath, 'r') as f:
-        return json.load(f)
+        return cast(GameState, json.load(f))

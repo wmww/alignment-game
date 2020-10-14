@@ -1,21 +1,7 @@
-from typing import Callable, TypedDict, List
+from typing import Callable
 from random import randint
 
-from state import read_state, write_state
-
-class Player(TypedDict):
-    user_id: str
-    username: str
-    pfp_path: str
-
-class Square(TypedDict):
-    claimant: str # Should be a user_id
-    territory: str # Unsure how to model atm
-    player: str # user_id, represents the player currently in the location
-
-class GameState(TypedDict):
-    grid: List[List[Square]]
-    players: List[Player]
+from state import Player, Square, GameState, read_state, write_state
 
 class Game():
     def __init__(
@@ -29,7 +15,7 @@ class Game():
         self.state = state
         self._write_state = write_state
 
-        if 'grid' not in self.state:
+        if not len(self.state['grid']):
             self.build_grid(bootstrap_grid_size)
         
         self.grid_size = len(self.state['grid'])
@@ -44,11 +30,12 @@ class Game():
             row = []
 
             for j in range(size):
-                row.append({
+                square: Square = {
                     'claimant': None,
                     'territory': None,
                     'player': None,
-                })
+                }
+                row.append(square)
 
             self.state['grid'].append(row)
         self.write_state()

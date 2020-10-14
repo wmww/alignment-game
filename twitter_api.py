@@ -1,4 +1,4 @@
-from twitter import Api
+from twitter import Api # type: ignore
 from dotenv import load_dotenv
 import os
 from os import environ

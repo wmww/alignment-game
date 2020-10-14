@@ -1,4 +1,4 @@
-import pytest
+import pytest # type: ignore
 from state import read_state, remove_state_file
 from game import Game
 
