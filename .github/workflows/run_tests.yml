@@ -14,9 +14,9 @@ jobs:
     - name: Update
       run: sudo apt update
     - name: Install apt dependencies
-      run: sudo apt install python3 python3-pip python3-setuptools python-wheel-common
+      run: sudo apt install python3 python3-pip python3-setuptools python3-pytest python-wheel-common
     - name: Install requirements
       run: pip3 install -r requirements.txt
     - name: Run tests
-      run: pytest
+      run: pytest-3
       timeout-minutes: 5
